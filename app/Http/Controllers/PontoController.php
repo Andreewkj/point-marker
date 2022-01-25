@@ -41,7 +41,14 @@ class PontoController extends Controller
      */
     public function store(Request $request)
     {
-        dump($request->all());
+
+        $current = Carbon::now('America/Sao_Paulo');
+        $current = explode(' ',$current->toDateTimeString());
+        $currentTime = $current[1];
+
+        dd($request->currentData, $currentTime);
+
+        //dump($request->all());
     }
 
     /**
