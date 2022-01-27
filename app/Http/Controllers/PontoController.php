@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Markup;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class PontoController extends Controller
 {
@@ -43,12 +45,11 @@ class PontoController extends Controller
     {
 
         $current = Carbon::now('America/Sao_Paulo');
-        $current = explode(' ',$current->toDateTimeString());
-        $currentTime = $current[1];
+        $currentTime = $current->toDateTimeString();
 
-        dd($request->currentData, $currentTime);
+        $userId = Auth::id();
 
-        //dump($request->all());
+        $markup = Markup::create(['user_id' => $userId, 'markup' => $currentTime]);
     }
 
     /**

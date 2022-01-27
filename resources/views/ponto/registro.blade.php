@@ -75,7 +75,7 @@
     </div>
     <div class="mb-3">
         <label for="currentTime" class="form-label">Example textarea</label>
-        <input type="time" min="07:00" max="22:00" class="form-control" id="currentTime" name="currentTime" value="{{$time}}">
+        <input type="time" min="00:00" max="23:00" class="form-control" id="currentTime" name="currentTime" value="{{$time}}">
     </div>
     
     <button type="submit" class="btn btn-primary btn-lg">Logar</button>

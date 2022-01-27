@@ -21,3 +21,7 @@ Route::get('/home', 'PontoController@index')->name('home');
 Route::get('/registro', 'PontoController@create')->name('registro');
 Route::post('/registro', 'PontoController@store')->name('registro');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

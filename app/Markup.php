@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class markup extends Model
+class Markup extends Model
 {
     protected $fillable = ['user_id','markup'];
 
