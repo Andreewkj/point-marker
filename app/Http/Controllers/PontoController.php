@@ -50,6 +50,8 @@ class PontoController extends Controller
         $userId = Auth::id();
 
         $markup = Markup::create(['user_id' => $userId, 'markup' => $currentTime]);
+
+        return redirect()->back()->with('message', 'Marcação do ponto realizada as '. $currentTime .'!');
     }
 
     /**
