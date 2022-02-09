@@ -6,6 +6,7 @@ use App\Markup;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PontoController extends Controller
 {
@@ -32,7 +33,12 @@ class PontoController extends Controller
         $currentTime = $currentTime[0] .':'. $currentTime[1];
         $currentDate = $current[0];
 
-        return view('ponto.registro',['time'=>$currentTime,'date'=> $currentDate]);
+        $userId = Auth::id();
+        
+        $markups = DB::table('markups')->where('user_id',$userId)->get();
+
+        return view('ponto.registro',['markups'=> $markups]);
+
     }
 
     /**
@@ -45,13 +51,18 @@ class PontoController extends Controller
     {
 
         $current = Carbon::now('America/Sao_Paulo');
-        $currentTime = $current->toDateTimeString();
+        $current = explode(' ',$current->toDateTimeString());
+        $currentDay = $current[0];
+        $currentTime = $current[1];
 
         $userId = Auth::id();
 
-        $markup = Markup::create(['user_id' => $userId, 'markup' => $currentTime]);
+        $markup = Markup::create(['user_id' => $userId, 'markupDay' => $currentDay,'markupTime' => $currentTime]);
 
-        return redirect()->back()->with('message', 'Marcação do ponto realizada as '. $currentTime .'!');
+        $currentTime = explode(':',$currentTime);
+        $hour = $currentTime[0] . ':' . $currentTime[1];
+
+        return redirect()->back()->with('message', 'Marcação do ponto realizada as '. $hour .'!');
     }
 
     /**

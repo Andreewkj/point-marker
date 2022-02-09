@@ -12,16 +12,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+Auth::routes();
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/home', 'PontoController@index')->name('home');
-Route::get('/registro', 'PontoController@create')->name('registro');
-Route::post('/registro', 'PontoController@store')->name('registro');
+Route::get('/registro', 'PontoController@create')->name('registro')->middleware('auth');
+Route::post('/registro', 'PontoController@store')->name('registro')->middleware('auth');
 
 
-Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');

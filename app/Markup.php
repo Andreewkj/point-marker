@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Markup extends Model
 {
-    protected $fillable = ['user_id','markup'];
+    protected $fillable = ['user_id','markupDay','markupTime'];
 
     public function user(){
 
