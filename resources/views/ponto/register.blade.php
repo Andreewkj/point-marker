@@ -17,6 +17,22 @@
               </a>
     
               <ul class="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
+                @guest
+                <li>
+                  <a href="{{ route('login') }}"class="nav-link text-secondary">
+                    <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"></use></svg>
+                    Login
+                  </a>
+                </li>
+                <li>
+                  @if (Route::has('register'))
+                  <a href="{{ route('register') }}" class="nav-link text-white">
+                    <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#speedometer2"></use></svg>
+                    Register
+                  </a>
+                  @endif
+                </li>
+                @else
                 <li>
                   <a href="#" class="nav-link text-secondary">
                     <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#home"></use></svg>
@@ -32,21 +48,18 @@
                 <li>
                   <a href="#" class="nav-link text-white">
                     <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#table"></use></svg>
-                    Orders
+                    Opportunities
                   </a>
                 </li>
                 <li>
-                  <a href="#" class="nav-link text-white">
+                  <a href="{{ route('logout') }}" class="nav-link text-white">
                     <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#grid"></use></svg>
-                    Products
+                    Log Out
                   </a>
                 </li>
-                <li>
-                  <a href="#" class="nav-link text-white">
-                    <svg class="bi d-block mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"></use></svg>
-                    Customers ddd
-                  </a>
-                </li>
+
+                @endguest
+                
               </ul>
             </div>
           </div>
@@ -71,7 +84,7 @@
         </div> -->
       </header>
       <div class="container mt-4">      
-    <form action="" method="post">
+    <form action="{{route('register')}}" method="post">
       @csrf
       <div class="jumbotron text-center">
         <h1 class="display-1" id="time"></h1>
@@ -88,7 +101,7 @@
           <p class="display-6">Marcações do dia</p>
         <?php $i=1 ?>
         @foreach ($markups as $markup)
-          <li class="list-group-item" id="dayMarkups">{{$i}} -- {{$markup->markupTime}}</li>
+          <li class="list-group-item" id="dayMarkups">{{$i}} -- {{$markup}}</li>
         <?php $i++ ?>
         @endforeach
         

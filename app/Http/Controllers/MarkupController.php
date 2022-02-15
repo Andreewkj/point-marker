@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\helpers\Format;
 use App\Markup;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class PontoController extends Controller
+class MarkupController extends Controller
 {
+    Use Format;
+
     /**
      * Display a listing of the resource.
      *
@@ -27,17 +30,15 @@ class PontoController extends Controller
      */
     public function create()
     {
-        $current = Carbon::now('America/Sao_Paulo');
-        $current = explode(' ',$current->toDateTimeString());
-        $currentTime = explode(':', $current[1]);
-        $currentTime = $currentTime[0] .':'. $currentTime[1];
-        $currentDate = $current[0];
-
+        
         $userId = Auth::id();
         
-        $markups = DB::table('markups')->where('user_id',$userId)->get();
+        $markups = DB::table('markups')
+        ->where('user_id',$userId)
+        ->whereDate('markupDay',$this->formatDay())
+        ->pluck('markupTime');
 
-        return view('ponto.registro',['markups'=> $markups]);
+        return view('ponto.register',['markups'=> $markups]);
 
     }
 
@@ -49,20 +50,11 @@ class PontoController extends Controller
      */
     public function store(Request $request)
     {
-
-        $current = Carbon::now('America/Sao_Paulo');
-        $current = explode(' ',$current->toDateTimeString());
-        $currentDay = $current[0];
-        $currentTime = $current[1];
-
         $userId = Auth::id();
 
-        $markup = Markup::create(['user_id' => $userId, 'markupDay' => $currentDay,'markupTime' => $currentTime]);
+        $markup = Markup::create(['user_id' => $userId, 'markupDay' => $this->formatDay(),'markupTime' => $this->formatTime()]);
 
-        $currentTime = explode(':',$currentTime);
-        $hour = $currentTime[0] . ':' . $currentTime[1];
-
-        return redirect()->back()->with('message', 'Marcação do ponto realizada as '. $hour .'!');
+        return redirect()->back()->with('message', 'Marcação do ponto realizada as '. $this->formatTimeBR() .'!');
     }
 
     /**

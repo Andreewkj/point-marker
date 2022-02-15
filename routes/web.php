@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,15 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Auth::routes();
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/home', 'PontoController@index')->name('home');
-Route::get('/registro', 'PontoController@create')->name('registro')->middleware('auth');
-Route::post('/registro', 'PontoController@store')->name('registro')->middleware('auth');
-
-
-
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'MarkupController@create')->name('create')->middleware('auth');
+Route::post('/register', 'MarkupController@store')->name('register')->middleware('auth');
+Route::get('/logout', function(){
+    Auth::logout();
+    return redirect('/login');
+})->name('logout');
