@@ -13,6 +13,11 @@ class MarkupController extends Controller
 {
     Use Format;
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *

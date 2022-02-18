@@ -15,8 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 Auth::routes();
 
-Route::get('/', 'MarkupController@create')->name('create')->middleware('auth');
-Route::post('/register', 'MarkupController@store')->name('register')->middleware('auth');
+Route::get('/', 'MarkupController@create')->name('create');
+Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+Route::post('/markup', 'MarkupController@store')->name('markup');
 Route::get('/logout', function(){
     Auth::logout();
     return redirect('/login');
